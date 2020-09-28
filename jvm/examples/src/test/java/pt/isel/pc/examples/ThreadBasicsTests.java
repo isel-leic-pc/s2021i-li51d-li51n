@@ -53,9 +53,10 @@ public class ThreadBasicsTests {
         log.info("New thread started, waiting for it to end");
 
         // The Thread#join can be used to synchronize with the thread termination.
-        // Thread#join will only return after the *referenced* thread ends
-        // or the *calling* thread is interrupted)
-        // or the optional timeout elapses
+        // Thread#join will only return after
+        // - the *referenced* thread ends
+        // - or the *calling* thread is interrupted
+        // - or the optional timeout elapses
         th.join();
         log.info("New thread ended, finishing test");
     }
@@ -192,6 +193,46 @@ public class ThreadBasicsTests {
         th.interrupt();
         th.join();
         log.info("New thread ended, finishing test. Look to what happened to the created thread");
+    }
+
+    @Test
+    public void threads_can_throw_silently() {
+
+        Thread th = new Thread(() -> {
+            TestUtils.sleep(Duration.ofSeconds(2));
+            throw new RuntimeException("Booom!");
+        });
+        th.start();
+    }
+
+    @Test
+    public void threads_can_have_an_unhandled_exception_handler() throws InterruptedException {
+
+        Thread th = new Thread(() -> {
+            TestUtils.sleep(Duration.ofSeconds(2));
+            throw new RuntimeException("Booom!");
+        });
+        th.setUncaughtExceptionHandler((t, e) -> {
+            log.info("Uncaught exception on {}: {}", t.getName(), e.getMessage());
+        });
+        th.start();
+        log.info("Thread started");
+        th.join();
+    }
+
+    @Test
+    public void there_can_be_a_default_unhandled_exception_handler() throws InterruptedException {
+
+        Thread th = new Thread(() -> {
+            TestUtils.sleep(Duration.ofSeconds(2));
+            throw new RuntimeException("Booom!");
+        });
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+            log.info("Uncaught exception on {}: {}", t.getName(), e.getMessage());
+        });
+        th.start();
+        log.info("Thread started");
+        th.join();
     }
 
 }
