@@ -2,8 +2,8 @@
 
 ## Lecture Notes
 
-- Carlos Martins, ["Sincronização com Monitores na CLI e na Infra-estrutura Java"](synchronization_3rd.pdf), 2009.
-- Carlos Martins, ["_blackboards_ de Programação Concorrente, semestre de Versão de 2019/2020"]("https://github.com/carlos-martins/isel-leic-pc-s1920v-li51n/tree/master/zoom")
+- Carlos Martins, ["Sincronização com Monitores na CLI e na Infra-estrutura Java"](https://github.com/isel-leic-pc/s2021i-li51d-li51n/blob/main/docs/Synchronization_3rd.pdf), 2009.
+- Carlos Martins, ["_blackboards_ de Programação Concorrente, semestre de Versão de 2019/2020"](https://github.com/carlos-martins/isel-leic-pc-s1920v-li51n/tree/master/zoom)
 
 ## Books
 
