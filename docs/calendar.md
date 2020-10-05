@@ -13,7 +13,8 @@
   - Delivery on 5 December (week 9)
 
 - Third problem set
-  - Published on 14 December (week 11)
+
+  - Published on 7 December (week 10)
   - Delivery on 23 January (week 14)
 
 ## Weekly outline (plan)

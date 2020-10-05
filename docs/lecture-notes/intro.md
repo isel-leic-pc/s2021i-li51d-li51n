@@ -2,7 +2,7 @@
 
 ## Logistics
 
-- The evaluation criteria (term exams, problem sets, minimum grades) are available in Moodle.
+- The evaluation criteria (term exams, problem sets, minimum grades) are available in [Moodle](https://2021moodle.isel.pt/course/view.php?id=5624).
 
 - Make sure you are enrolled in Moodle in order to receive all the class notifications.
 
@@ -22,19 +22,24 @@
 
 ## Why the Concurrent Programming course?
 
-The Concurrent Programming course primary goal is to provide the knowledge and skills required to create **correct** applications for _multi-threads programming models_.
+The Concurrent Programming course primary goal is to provide the knowledge and skills required to create **correct** applications for _multi-threaded programming models_.
 
 ### Threads are everywhere
 
-Most application level programming models are multi-thread, meaning that application code runs in more than one thread, even if no threads are explicitly created by application code.
+Most current application level programming models are multi-thread, meaning that application code runs in more than one thread, even if no threads are explicitly created by that application code.
 
 As an example, on a servlet-based HTTP server, multiple requests can be handled simultaneously, with the processing of each request being made on a different thread.
-On the so called _thread-per-request model_, a new or available thread is selected to host the complete execution of each request.
-If the programming model has support for asynchronous operations, such as reactive streams based Spring application, then the execution of a single request may even span multiple distinct threads.
+On the so called _thread-per-request model_, an available thread is selected to host the complete execution of each request.
+If the programming model has support for asynchronous operations, such as reactive streams based Spring applications, then the execution of a single request may additionaly span multiple distinct threads.
 
-Another example are GUI-based programming models, such as the one defined for Android.
-There, a special thread, usually called _UI thread_ or _main thread_, is resposible to host the execution of all GUI related events (e.g. button click handlers).
+Another example are GUI-based programming models, such as the one defined by Android.
+There, a special thread, usually called _UI thread_ or _main thread_, is responsible to host the execution of all GUI related events (e.g. button click handlers).
 As a consequence, this thread cannot be used to host operations that take more than some milliseconds, such as requests to external system or CPU-intensive operations.
-Making such operations on this thread would mean that the application would become _non-responsive_, i.e. not be able to handle events during these periods.
+Making such operations on this thread would mean that the application would become _unresponsive_, i.e. not be able to handle events during these periods.
 A way to solve this is to handle these long-term blocking operations on distinct threads, freeing the UI thread to handle GUI events.
 This makes application code run in more than one thread, with the associated challenges that this course will help identify and overcome.
+
+### The challenges of multi-threaded programming
+
+Interaction between multiple threads, namely when accessing shared memory, presents a set of challenges.
+The goal of this course is to identify this challenges and present techniques to overcome them, namely by the use of proper synchronization and thread coordination techniques.
