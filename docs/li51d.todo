@@ -2,25 +2,46 @@
 
 ## S1.1 - 2020/10/07
 
-- Apresentação
-  - Modo de funcionamento durante o semestre
-    - Sessões presenciais e sessões Zoom
-    - Sessões práticas
-    - Moodle
-    - GitHub
-    - Slack
-  - Objectivos da unidade curricular
-  - Programa
-  - Avaliação
-    - Teste final
-    - Séries de exercícios
-  - Recursos
-  - Requisitos
-  - Ambientes de desenvolvimento
-    - Java 11, Gradle, Intellij, JUnit, and sample tests
-    - .NET Core, Rider
++ Apresentação
+  + Modo de funcionamento durante o semestre
+    + Sessões presenciais e sessões Zoom
+    + Sessões práticas
+    + Moodle
+      + Registo
+    + GitHub
+    + Slack
+      + Registo
+  + Objectivos da unidade curricular
+    + _Threads are everywhere_
+    + Desenho e implementação correcta de aplicações em ambientes multi-thread
+  + Programa
+    + Introdução
+    + Sincronizadores
+    + _Thread pools_ e execução de tarefas
+    + Modelo de memória, algoritmos _lock-free_, e optimização de sincronizadores
+    + I/O assíncrono
+    + Modelos de programação assíncrona
+  + Avaliação
+    + Teste final
+    + Três séries de exercícios
+  + Recursos
+  + Requisitos
+  + Ambientes de desenvolvimento e execução
+    + Java 11, Gradle, Intellij, JUnit, and sample tests
+    + .NET Core, Rider
 
 ## S1.2 - 2020/10/08
+
+- What are threads?
+  - Data sharing between threads
+- Why have multiple threads in a single application?
+- Threads in the JVM
+  - Creation
+    - Daemon
+    - Static methods
+  - Synchronization with termination
+  - Thread interruption
+- Concurrency hazards
 
 
 
