@@ -33,15 +33,83 @@
 ## S1.2 - 2020/10/08
 
 - What are threads?
+  - See slides
+  - What characterizes a thread
+    - shared code and head
+    - private stack and registers
+  - Multiple processors with multiple threads
+  - Sharing the same processor between multiple threads
+    - What is the context and what is the context switch
+  - Thread state: running, ready, and waiting/blocked
+  - What is scheduling
   - Data sharing between threads
+    - Examples
+
 - Why have multiple threads in a single application?
+  - As many threads as CPUs
+  - More threads than CPUs
+    - "Blocking programming style"
+    
 - Threads in the JVM
-  - Creation
-    - Daemon
-    - Static methods
-  - Synchronization with termination
-  - Thread interruption
+  - creation and "joining" (i.e. synchronization with termination)
+    - `create_start_and_join_with_new_thread`
+    - `we_can_have_multiple_threads_running_the_same_method`
+    - `create_thread_using_a_lambda`
+    - `create_thread_using_derived_classes`
+  - thread interruption
+    - `threads_can_be_interrupted`
+    - `InterruptedException_only_happens_on_interruptible_points`
+    - `threads_can_check_the_interrupted_state`
+  - threads and uncatched exceptions
+    - `threads_can_throw_silently`
+    - `threads_can_have_an_unhandled_exception_handler`
+    - `there_can_be_a_default_unhandled_exception_handler`
+
+- Example: threads in a servlet based server
+
 - Concurrency hazards
+  - Non-atomicity 
+    - `loosing_increments` and variants
+  - Check-then-act 
+    - `loosing_increments_with_a_synchronized_map_and_atomics`
+    - `not_loosing_increments_with_a_concurrent_map`
+    - `loosing_items_on_a_linked_list`
+  - Conclusion
+    - "A program that accesses a mutable variable from multiple threads without synchronization is a broken program", in "Java Concurrency in Practice", pg 110. 
+
+- Avoiding concurrency hazards
+  - Do not share data between threads
+    - How to identify and avoid sharing
+  - Share only effectlively immutable data
+    - Data is a graph
+      - See slides
+    - Correct publication
+      - See slides
+  - Synchronize shared mutable data
+
+- Sharing mutable data
+  - Use _intrinsically_ thread-safe classes
+    - Classes that ensure documented behavior even when used by multiple threads
+    - Examples  
+      - `AtomicInteger`
+      - `Collections.synchronizedMap`
+      - `DataSource`
+        - How to check if classes are thread-safe?
+    - Composition of thread safe classes isn't necessarely _thread safe_
+      - See `loosing_increments_with_a_synchronized_map_and_atomics`
+      
+- Locks
+  - Java intrinsic locks and the `synchronized` keyword
+  - What does a lock ensure
+    - See slides
+  - Private or public lock
+  - Synchronized methods
+
+- Data synchronization and control synchronization
+  - _Data synchronization_ - ensuring mutual exclusion and proper effect visibility between threads
+  - _Control synchronization_ - waiting for some condition to be true, eventual as a resulf of actions performed by other thread
+  
+
 
 
 

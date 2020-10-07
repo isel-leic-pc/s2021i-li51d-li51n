@@ -2,24 +2,34 @@
 
 ## S1.1 - 2020/10/07
 
-- Apresentação
-  - Modo de funcionamento durante o semestre
-    - Sessões presenciais e sessões Zoom
-    - Sessões práticas
-    - Moodle
-    - GitHub
-    - Slack
-    - [E-learning guide](https://github.com/isel-leic-pc/s2021i-li51d-li51n/blob/main/docs/e-learning.md) 
-  - Objectivos da unidade curricular
-  - Programa
-  - Avaliação
-    - Teste final
-    - Séries de exercícios
-  - Recursos
-  - Requisitos
-  - Ambientes de desenvolvimento
-    - Java 11, Gradle, Intellij, JUnit, and sample tests
-    - .NET Core, Rider
++ Apresentação
+  + Modo de funcionamento durante o semestre
+    + Sessões presenciais e sessões Zoom
+    + Sessões práticas
+    + Moodle
+      + Registo
+    + Slack
+      + Registo
+    + GitHub
+  + Objectivos da unidade curricular
+    + _Threads are everywhere_
+    + Desenho e implementação correcta de aplicações em ambientes multi-thread
+  + Programa
+    + Introdução
+    + Sincronizadores
+    + _Thread pools_ e execução de tarefas
+    + Modelo de memória, algoritmos _lock-free_, e optimização de sincronizadores
+    + I/O assíncrono
+    + Modelos de programação assíncrona
+    + Coordenação assincrona entre threads
+  + Avaliação
+    + Teste final, >= 8
+    + Três séries de exercícios (primeira e segunda individuais, terceira pode ser em grupo)
+  + Recursos
+  + Requisitos
+  + Ambientes de desenvolvimento e execução
+    + Java 11, Gradle, Intellij, JUnit, and sample tests
+    + .NET Core, Rider
 
 ## S1.2 - 2020/10/09
 
