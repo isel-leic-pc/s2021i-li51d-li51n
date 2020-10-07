@@ -1,5 +1,9 @@
 # Introduction to threads
 
+## What are threads?
+
+See [slides](threads.pdf)
+
 ## Why have multiple threads?
 
 First, to take advantage of a system having more than one CPU, which is becoming rather common.
