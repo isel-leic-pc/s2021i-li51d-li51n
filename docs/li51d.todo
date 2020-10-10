@@ -32,23 +32,23 @@
 
 ## S1.2 - 2020/10/08
 
-- What are threads?
-  - See slides
-  - What characterizes a thread
-    - shared code and head
-    - private stack and registers
-  - Multiple processors with multiple threads
-  - Sharing the same processor between multiple threads
-    - What is the context and what is the context switch
-  - Thread state: running, ready, and waiting/blocked
-  - What is scheduling
-  - Data sharing between threads
-    - Examples
++ What are threads?
+  + See slides
+  + What characterizes a thread
+    + shared code and heap
+    + private stack and registers
+  + Multiple processors with multiple threads
+  + Sharing the same processor between multiple threads
+    + What is the context and what is the context switch
+  + Thread state: running, ready, and waiting/blocked
+  + What is scheduling
+  + Data sharing between threads
+    + Examples
 
-- Why have multiple threads in a single application?
-  - As many threads as CPUs
-  - More threads than CPUs
-    - "Blocking programming style"
++ Why have multiple threads in a single application?
+  + As many threads as CPUs
+  + More threads than CPUs
+    + "Blocking programming style"
     
 - Threads in the JVM
   - creation and "joining" (i.e. synchronization with termination)
