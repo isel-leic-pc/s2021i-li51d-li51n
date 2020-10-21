@@ -24,6 +24,7 @@ public class ThreadingHazardsTests {
         List<Thread> ths = new ArrayList<>(N_OF_THREADS);
         for (int i = 0; i < N_OF_THREADS; ++i) {
             Thread th = new Thread(() -> {
+                // Note that this 'for' runs in different threads
                 for (int j = 0; j < N_OF_REPS; ++j) {
                     ++simpleCounter;
                 }
@@ -35,7 +36,7 @@ public class ThreadingHazardsTests {
         ths.forEach(TestUtils::uninterruptibleJoin);
 
         // notice that the assertion is NOT equals
-        assertNotEquals(N_OF_THREADS * N_OF_REPS, simpleCounter);
+        assertEquals(N_OF_THREADS * N_OF_REPS, simpleCounter);
     }
 
     private volatile int volatileCounter = 0;
@@ -92,6 +93,7 @@ public class ThreadingHazardsTests {
             Thread th = new Thread(() -> {
                 for (int j = 0; j < N_OF_REPS; ++j) {
                     int key = j;
+                    // check-then-act
                     AtomicInteger data = map.get(key);
                     if (data == null) {
                         data = new AtomicInteger(1);
@@ -139,7 +141,7 @@ public class ThreadingHazardsTests {
         public void increment(int key) {
             synchronized (lock) {
                 // Notice how the check-then-act is performed while holding the lock,
-                // so that no other thread can observer or mutate the data-structure while
+                // so that no other thread can observe or mutate the data-structure while
                 // doing this composite operation
                 // We say that the operation is "protected" by the lock
                 MutableInt data = map.get(key);
@@ -230,6 +232,7 @@ public class ThreadingHazardsTests {
         }
 
         Node<T> head = null;
+        Object lock = new Object();
 
         void push(T value) {
             Node<T> node = new Node<T>(value, head);

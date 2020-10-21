@@ -46,6 +46,7 @@ public class ThreadBasicsTests {
 
         // We create a thread by creating a Thread object, passing in a method reference
         Thread th = new Thread(ThreadBasicsTests::threadMethod);
+        log.info("New thread created but not yet started");
 
         // By default threads are not ready to run after they are created.
         // Only after Thread#start is called is the thread considered in the "ready" state.
@@ -68,6 +69,7 @@ public class ThreadBasicsTests {
 
         // We can create multiples threads referencing the same method
         List<Thread> ths = List.of(
+                new Thread(ThreadBasicsTests::threadMethod),
                 new Thread(ThreadBasicsTests::threadMethod),
                 new Thread(ThreadBasicsTests::threadMethod)
         );
@@ -106,11 +108,11 @@ public class ThreadBasicsTests {
         log.info("New thread ended, finishing test");
     }
 
-    // Threads can also be defined by deriving from the Thread class (this is Java afterall)
+    // Threads can also be defined by deriving from the Thread class (this is Java after all)
     static class MyThread extends Thread {
         @Override
         public void run() {
-            log.info("Running on thread '{}'", Thread.currentThread().getName());
+            log.info("Running on thread MyThread - '{}'", Thread.currentThread().getName());
             TestUtils.sleep(Duration.ofSeconds(2));
         }
     }
@@ -134,6 +136,7 @@ public class ThreadBasicsTests {
             // (the main thread).
             log.info("Running on thread '{}, waiting for 4 seconds'", Thread.currentThread().getName());
             TestUtils.sleep(Duration.ofSeconds(4));
+            log.info("New thread is about to end");
         });
         th.start();
         log.info("waiting for 2 seconds");
@@ -152,9 +155,13 @@ public class ThreadBasicsTests {
             // Notice how in this thread we are using a local variable from a different thread,
             // (the main thread).
             log.info("Running on thread '{}, running for 4 seconds'", Thread.currentThread().getName());
-            Instant limit = Instant.now().plus(4, SECONDS);
-            while(Instant.now().isBefore(limit)) {
+            long startMillis = Instant.now().toEpochMilli();
+            Instant deadline = Instant.now().plus(4, SECONDS);
+            while(Instant.now().isBefore(deadline)) {
                 // no interruptible method is called
+                if((Instant.now().toEpochMilli() - startMillis) % 500 == 0) {
+                    log.info("isInterrupted={}", Thread.currentThread().isInterrupted());
+                }
             }
         });
         th.start();
@@ -196,13 +203,15 @@ public class ThreadBasicsTests {
     }
 
     @Test
-    public void threads_can_throw_silently() {
+    public void threads_can_throw_silently() throws InterruptedException {
 
         Thread th = new Thread(() -> {
             TestUtils.sleep(Duration.ofSeconds(2));
             throw new RuntimeException("Booom!");
         });
         th.start();
+        th.join();
+        log.info("test ending normally");
     }
 
     @Test

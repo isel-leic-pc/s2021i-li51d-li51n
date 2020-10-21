@@ -37,9 +37,17 @@ public class SimpleServletExample {
 
     static class TheServlet extends HttpServlet {
 
+        private String fieldRequestURI;
+
         @Override
         public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
             log.info("doGet request: URI='{}', method='{}", request.getMethod(), request.getRequestURI());
+
+            // private to the thread
+            String localRequestURI = request.getRequestURI();
+
+            // SHARED between all threads
+            this.fieldRequestURI = request.getRequestURI();
 
             try {
                 Thread.sleep(1000);
