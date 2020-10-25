@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * {@link SimpleNArySemaphoreV0#release} method. This algorithm is not efficient and can be improved,
  * since it produces unneeded context switches when there are multiple threads waiting on the condition.
  */
-public class SimpleNArySemaphoreV0 {
+public class SimpleNArySemaphoreV0 implements NArySemaphore{
 
     private int units;
     private final Object lock = new Object();
@@ -22,8 +22,8 @@ public class SimpleNArySemaphoreV0 {
     public boolean acquire(int requestedUnits, long timeout, TimeUnit timeUnit) throws InterruptedException {
 
         synchronized (lock) {
-            if (units > requestedUnits) {
-                units -= 1;
+            if (units >= requestedUnits) {
+                units -= requestedUnits;
                 return true;
             }
             if (Timeouts.noWait(timeout)) {
@@ -33,7 +33,7 @@ public class SimpleNArySemaphoreV0 {
             long remaining = Timeouts.remaining(deadline);
             while (true) {
                 lock.wait(remaining);
-                if (units > requestedUnits) {
+                if (units >= requestedUnits) {
                     units -= requestedUnits;
                     return true;
                 }

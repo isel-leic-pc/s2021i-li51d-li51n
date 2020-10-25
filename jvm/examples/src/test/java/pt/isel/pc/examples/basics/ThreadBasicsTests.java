@@ -1,4 +1,4 @@
-package pt.isel.pc.examples;
+package pt.isel.pc.examples.basics;
 
 import org.junit.Test;
 import org.slf4j.Logger;

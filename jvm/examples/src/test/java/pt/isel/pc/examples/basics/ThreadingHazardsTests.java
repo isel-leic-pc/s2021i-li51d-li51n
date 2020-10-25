@@ -1,4 +1,4 @@
-package pt.isel.pc.examples;
+package pt.isel.pc.examples.basics;
 
 import org.junit.Test;
 import pt.isel.pc.examples.utils.TestUtils;

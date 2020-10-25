@@ -7,15 +7,14 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * N-ary semaphore (i.e. allowing acquisition and release of multiple units) with FIFO policy
- * and using {@link Object#notifyAll} on the {@link SimpleNArySemaphoreV1#release} method. T
- * his algorithm is not efficient and can be improved, since it produces unneeded context switches when there are
+ * and using {@link Object#notifyAll} on the {@link NArySemaphoreWithFifoOrder#release} method.
+ * This algorithm is not efficient and can be improved, since it produces unneeded context switches when there are
  * multiple threads waiting on the condition.
  */
-public class SimpleNArySemaphoreV1 {
+public class NArySemaphoreWithFifoOrder implements NArySemaphore{
 
     static class Request {
         public final int requestedUnits;
-
         Request(int requestedUnits) {
             this.requestedUnits = requestedUnits;
         }
@@ -25,14 +24,14 @@ public class SimpleNArySemaphoreV1 {
     private final NodeLinkedList<Request> queue = new NodeLinkedList<>();
     private final Object lock = new Object();
 
-    public SimpleNArySemaphoreV1(int units) {
+    public NArySemaphoreWithFifoOrder(int units) {
         this.units = units;
     }
 
     public boolean acquire(int requestedUnits, long timeout, TimeUnit timeUnit) throws InterruptedException {
 
         synchronized (lock) {
-            if (units > requestedUnits) {
+            if (queue.isEmpty() && units >= requestedUnits) {
                 units -= requestedUnits;
                 return true;
             }
@@ -48,11 +47,12 @@ public class SimpleNArySemaphoreV1 {
                 } catch (InterruptedException e) {
                     queue.remove(request);
                     notifyIfNeeded();
+                    throw e;
                 }
-                if (queue.isHeadNode(request) && units > requestedUnits) {
+                if (queue.isHeadNode(request) && units >= requestedUnits) {
                     queue.pull();
                     units -= requestedUnits;
-                    lock.notifyAll();
+                    notifyIfNeeded();
                     return true;
                 }
                 remaining = Timeouts.remaining(deadline);
@@ -68,7 +68,7 @@ public class SimpleNArySemaphoreV1 {
     public void release(int releasedUnits) {
         synchronized (lock) {
             units += releasedUnits;
-            lock.notifyAll();
+            notifyIfNeeded();
         }
     }
 
@@ -77,5 +77,4 @@ public class SimpleNArySemaphoreV1 {
             lock.notifyAll();
         }
     }
-
 }

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * However it does create an issue with give-up by interruption: we need to make sure the single notification is not lost.
  * This is ensured by <a href="https://docs.oracle.com/javase/specs/jls/se7/html/jls-17.html#jls-17.2.4">JLS</a>.
  */
-public class SimpleUnarySemaphoreV1 {
+public class SimpleUnarySemaphoreV1 implements UnarySemaphore{
 
     private int units;
     private final Object lock = new Object();
