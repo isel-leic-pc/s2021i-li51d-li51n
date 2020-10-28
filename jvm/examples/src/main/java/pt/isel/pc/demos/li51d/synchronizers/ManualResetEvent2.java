@@ -74,7 +74,9 @@ public class ManualResetEvent2 {
                 try {
                     threadCondition.await(remaining, TimeUnit.MILLISECONDS);
                 } catch (InterruptedException e) {
-                    queue.remove(localNode);
+                    if(!localNode.value.isDone) {
+                        queue.remove(localNode);
+                    }
                     throw e;
                 }
                 // exit condition uses the thread's request
