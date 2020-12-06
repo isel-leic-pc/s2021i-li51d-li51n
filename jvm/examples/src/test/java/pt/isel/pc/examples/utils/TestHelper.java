@@ -68,8 +68,8 @@ public class TestHelper {
 
     public void join() throws InterruptedException {
         for (Thread th : ths) {
-            th.join(testDuration.toMillis()+1000);
-            if(th.isAlive()) {
+            th.join(testDuration.toMillis() + 1000);
+            if (th.isAlive()) {
                 throw new AssertionError("Thread did not end in expected time");
             }
         }
