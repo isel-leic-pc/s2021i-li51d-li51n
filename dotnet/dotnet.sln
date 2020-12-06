@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Exampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{FAB5CC8A-817B-4794-850F-89E54F190228}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonEchoServer", "JsonEchoServer\JsonEchoServer.csproj", "{153ACBBB-A7C6-4A4D-ACEA-7F6311107625}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{FAB5CC8A-817B-4794-850F-89E54F190228}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAB5CC8A-817B-4794-850F-89E54F190228}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAB5CC8A-817B-4794-850F-89E54F190228}.Release|Any CPU.Build.0 = Release|Any CPU
+		{153ACBBB-A7C6-4A4D-ACEA-7F6311107625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{153ACBBB-A7C6-4A4D-ACEA-7F6311107625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{153ACBBB-A7C6-4A4D-ACEA-7F6311107625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{153ACBBB-A7C6-4A4D-ACEA-7F6311107625}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -13,7 +13,7 @@ namespace Examples.Synchronizers
                 return;
             }
             Monitor.Enter(condition); // can throw ThreadInterruptedException
-            Monitor.Exit(mlock);
+            Monitor.Exit(mlock); 
             try
             {
                 Monitor.Wait(condition, timeout); // can throw ThreadInterruptedException
