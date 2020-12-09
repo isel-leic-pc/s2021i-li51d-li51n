@@ -81,13 +81,12 @@ public class FetchAndSave3 implements CompletionHandler<Object, Void> {
         this.completionHandler = completionHandler;
     }
 
-    public static void run(URL url, String fileName, CompletionHandler<Void, Void> completionHandler)
-            throws IOException, ExecutionException, InterruptedException {
+    public static void run(URL url, String fileName, CompletionHandler<Void, Void> completionHandler) {
         FetchAndSave3 stateMachine = new FetchAndSave3(url, fileName, completionHandler);
         stateMachine.start();
     }
 
-    private void start() throws InterruptedException, ExecutionException, IOException {
+    private void start() {
         state = States.connect_0;
         dispatch(null);
     }
