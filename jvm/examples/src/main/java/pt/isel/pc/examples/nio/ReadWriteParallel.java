@@ -23,20 +23,19 @@ public class ReadWriteParallel {
             ByteBuffer.allocate(8),
     };
     private int readBufferIx = 0;
-    private Throwable readException = null;
-    private Throwable writeException = null;
 
     private int getReadBufferIx() {
         return readBufferIx;
     }
-
     private int getWriteBufferIx() {
         return (readBufferIx + 1) % 2;
     }
-
     private void flipBuffers() {
         readBufferIx = (readBufferIx + 1) % 2;
     }
+
+    private Throwable readException = null;
+    private Throwable writeException = null;
 
     private int size = 0;
     private int filePosition = 0;
@@ -73,15 +72,13 @@ public class ReadWriteParallel {
         @Override
         public void completed(Integer result, Void attachment) {
             log.info("Completed read of {} bytes", result);
-            tryRun(() -> {
-                if (result == -1) {
-                    log.info("Reached end of read");
-                    readCompleted = true;
-                } else {
-                    size += result;
-                }
-                nextStep();
-            });
+            if (result == -1) {
+                log.info("Reached end of read");
+                readCompleted = true;
+            } else {
+                size += result;
+            }
+            nextStep();
         }
 
         @Override
@@ -96,11 +93,9 @@ public class ReadWriteParallel {
         @Override
         public void completed(Integer result, Void attachment) {
             log.info("Completed write of {} bytes", result);
-            tryRun(() -> {
-                filePosition += result;
-                log.info("File position updated to {}", filePosition);
-                nextStep();
-            });
+            filePosition += result;
+            log.info("File position updated to {}", filePosition);
+            nextStep();
         }
 
         @Override
@@ -110,26 +105,19 @@ public class ReadWriteParallel {
         }
     };
 
-    private void tryRun(Runnable runnable) {
-        try {
-            runnable.run();
-        } catch (Throwable th) {
-            ch.failed(th, null);
-        }
-    }
-
     private void nextStep() {
         if (pendingOperations.decrementAndGet() != 0) {
             return;
         }
-        log.info("starting new cycle");
         // No pending operation, can proceed
+        log.info("starting new cycle");
         if (readException != null || writeException != null) {
             log.info("At least one exception pending, ending");
             CompositeThrowable exc = CompositeThrowable.make(readException, writeException);
             ch.failed(exc, null);
             return;
         }
+
         if (readCompleted) {
             log.info("Ended copy, exiting");
             ch.completed(size, null);
@@ -155,9 +143,22 @@ public class ReadWriteParallel {
 
     private void startWrite() {
         try {
+            if(filePosition > 100) {
+                throw new RuntimeException("Test Error");
+            }
             targetChannel.write(buffers[getWriteBufferIx()], filePosition, null, writeHandler);
         } catch (Throwable e) {
-            ch.failed(e, null);
+            log.warn("startWrite failed with {}", e.getMessage());
+            writeException = e;
+            nextStep();
+        }
+    }
+
+    private void tryRun(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (Throwable th) {
+            ch.failed(th, null);
         }
     }
 }

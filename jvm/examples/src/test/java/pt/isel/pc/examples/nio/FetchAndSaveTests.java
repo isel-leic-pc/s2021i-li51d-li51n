@@ -64,4 +64,17 @@ public class FetchAndSaveTests {
         done.await();
     }
 
+    @Test
+    public void testFetchAndSave5() throws IOException, InterruptedException {
+        CountDownLatch done = new CountDownLatch(1);
+
+        FetchAndSave5.run(new URL("http://httpbin.org:80/get"), "build/get5.txt")
+            .whenComplete((res, exc) -> {
+                done.countDown();
+                log.info("complete: ({}, {})", res, exc != null ? exc.getMessage() : "-");
+            });
+
+        done.await();
+    }
+
 }
